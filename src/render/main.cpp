@@ -17,7 +17,7 @@ int main (int argc, char* args[])
     Window& window = render.GetWindow();
 
     SDL_Window* sdlWin = window.GetRawSDLWindow();
-    SDL_Surface* sdlSurf = window.GetRawSDLSurface();
+    SDL_Surface* sdlSurf = window.GetRawSDLActiveSurface();
 
     // We were successful, let's get the screen adn window and render.
     //Fill the surface white

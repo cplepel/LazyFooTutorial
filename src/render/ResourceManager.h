@@ -22,36 +22,20 @@
 // LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //--------------------------------------------------------------------------------------------------
-#pragma once
 
-struct SDL_Window;
+#pragma once
+#include <string>
+
 struct SDL_Surface;
 
-class Window {
-
+class ResourceManager {
 public:
 
-    //Screen dimension constants
-    // TODO CPP: These need to be data driven in an inl file.
-    static const int SCREEN_WIDTH = 640;
-    static const int SCREEN_HEIGHT = 480;
+    // TODO: Temporary function to test loading surfaces.
+    // SDL_Surface is a software rendered target, we need textures.
+    bool LoadDemoMedia (SDL_Surface* surf);
 
-    Window ();
-    ~Window ();
-    bool Initialize ();
-
-    bool Terminate ();
-
-    SDL_Window* GetRawSDLWindow () { return m_window; }
-    SDL_Surface* GetRawSDLActiveSurface () { return m_activeSurface; }
-
-    const SDL_Window* GetRawSDLWindow() const { return m_window; }
-    const SDL_Surface* GetRawSDLActiveSurface () const { return m_activeSurface; }
-
+    std::string BuildMediaPath (const char* str);
 private:
-    //The window we'll be rendering to
-    SDL_Window* m_window{ nullptr };
 
-    //The surface contained by the window
-    SDL_Surface* m_activeSurface{ nullptr };
 };

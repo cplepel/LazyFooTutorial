@@ -18,9 +18,9 @@ bool Window::Initialize () {
     assert(m_window != nullptr);
 
     // Init screen surface.
-    m_screenSurface = SDL_GetWindowSurface(m_window);
-    assert(m_screenSurface != nullptr);
-    return m_screenSurface != nullptr && m_window != nullptr;
+    m_activeSurface = SDL_GetWindowSurface(m_window);
+    assert(m_activeSurface != nullptr);
+    return m_activeSurface != nullptr && m_window != nullptr;
 }
 
 //--------------------------------------------------------------------------------------------------

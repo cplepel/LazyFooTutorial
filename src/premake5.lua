@@ -19,6 +19,8 @@ workspace "EngineLearning"
 
       files { "render/*.h", "render/*.cpp" }
 
+	  vpaths {["Engine"] = {"render/*Engine*.h", "render/*Engine*.cpp"} }
+
       filter "configurations:Debug"
          defines { "DEBUG" }
          symbols "On"

@@ -34,8 +34,6 @@ public:
     // TODO: Temporary function to test loading surfaces.
     // SDL_Surface is a software rendered target, we need textures.
     bool LoadDemoMedia (SDL_Surface* surf);
-
-    std::string BuildMediaPath (const char* str);
 private:
 
 };

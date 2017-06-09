@@ -6,7 +6,10 @@ workspace "EngineLearning"
    location "../build/"
 
    platforms {"Native", "x86", "x64"}
-
+   
+   postbuildcommands {
+       "{COPY} ../data/images/**.bmp %{cfg.targetdir}"
+   }
    project "Render"
       kind "ConsoleApp"
       language "C++"

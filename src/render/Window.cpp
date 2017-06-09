@@ -29,3 +29,13 @@ bool Window::Terminate() {
     m_window = nullptr;
     return true;
 }
+
+//----------------------------------------------------------------------------------------------
+void Window::BlitNewSurface (SDL_Surface* newSurf) {
+    BlitNewSurface(newSurf, nullptr, nullptr);
+}
+
+//----------------------------------------------------------------------------------------------
+void Window::BlitNewSurface (SDL_Surface* surf, const SDL_Rect* srcRect, SDL_Rect* dstRec) {
+    SDL_BlitSurface(surf, srcRect, m_activeSurface, dstRec);
+}

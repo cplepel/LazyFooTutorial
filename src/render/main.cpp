@@ -1,6 +1,7 @@
 //Using SDL and standard IO
 #include "CoreEngine.h"
 #include <stdio.h>
+#include "ResourceManager.h"
 
 
 int main (int argc, char* args[])
@@ -17,7 +18,13 @@ int main (int argc, char* args[])
     Window& window = render.GetWindow();
 
     SDL_Window* sdlWin = window.GetRawSDLWindow();
-    SDL_Surface* sdlSurf = window.GetRawSDLActiveSurface();
+    SDL_Surface* sdlSurf = window.GetRawSDLWindowSurface();
+
+    // TODO CODY: Discuss with team asset loading.
+    ResourceManager rem; 
+    SDL_Surface* newSurf = nullptr;
+    rem.LoadDemoMedia(newSurf);
+    window.BlitNewSurface(newSurf);
 
     // We were successful, let's get the screen adn window and render.
     //Fill the surface white

@@ -24,8 +24,12 @@
 //--------------------------------------------------------------------------------------------------
 #pragma once
 
+// We use FORWARD DECLARATION here to prevent having to include the h files for SDL here.
+// This helps compile time but can also prevent CIRCULAR INCLUDES. We will include
+// the h files in the cpp.
 struct SDL_Window;
 struct SDL_Surface;
+struct SDL_Rect;
 
 class Window {
 
@@ -42,11 +46,14 @@ public:
 
     bool Terminate ();
 
+    void BlitNewSurface (SDL_Surface* newSurf);
+    void BlitNewSurface (SDL_Surface* surf, const SDL_Rect* srcRect, SDL_Rect* dstRec);
+
     SDL_Window* GetRawSDLWindow () { return m_window; }
-    SDL_Surface* GetRawSDLActiveSurface () { return m_activeSurface; }
+    SDL_Surface* GetRawSDLWindowSurface () { return m_activeSurface; }
 
     const SDL_Window* GetRawSDLWindow() const { return m_window; }
-    const SDL_Surface* GetRawSDLActiveSurface () const { return m_activeSurface; }
+    const SDL_Surface* GetRawSDLWindowSurface () const { return m_activeSurface; }
 
 private:
     //The window we'll be rendering to

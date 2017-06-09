@@ -5,47 +5,58 @@ workspace "EngineLearning"
    configurations { "Debug", "Release", "CodyTime" }
    location "../build/"
 
-   platforms {"Native", "x86", "x64"}
+   platforms {"Native", "x86", "x64", "Windows", "Mac"}
    
+   warnings "Extra"
+   flags {"FatalWarnings"}
    postbuildcommands {
        "{COPY} ../data/images/**.bmp %{cfg.targetdir}"
    }
-   project "Render"
+   project "Engine"
       kind "ConsoleApp"
       language "C++"
       targetdir "/bin/%{cfg.buildcfg}"
       location "../build/"
       includedirs {
-      "../libraries/sdl/include/"
+      "../libraries/sfml/include/",
+      "../libraries/glew/include/"
       }
 
 
-      files { "render/*.h", "render/*.cpp" }
 
-	  vpaths {["Engine"] = {"render/*Engine*.h", "render/*Engine*.cpp"} }
+      files { "engine/*.h", "engine/*.cpp" }
+
+	  vpaths {
+                        ["Engine"] = {"engine/*Engine*.h", "engine/*Engine*.cpp"} ,
+                        ["Debug"] = {"engine/*Debug*.h", "engine/*Debug*.cpp"} ,
+                        ["CoreUtils"] = {"engine/*Utils*.h", "engine/*Util*.cpp"} ,
+               }
+
 
       filter "configurations:Debug"
-         defines { "DEBUG" }
+         defines { "SFML_STATIC","DEBUG" }
          symbols "On"
-         links {"SDL2", "SDL2main", "SDL2test", "SDL2.dll"}
+         links {"sfml-graphics-s-d", "sfml-system-s-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-audio-s-d",  "glew32",  "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
 
       filter "configurations:Release"
-         defines { "NDEBUG" }
+         defines { "SFML_STATIC", "NDEBUG", "RELEASE" }
          optimize "On"
-         links {"SDL2", "SDL2main", "SDL2test", "SDL2.dll"}
+         links {"sfml-graphics-s", "sfml-system-s", "sfml-window-s", "sfml-network-s", "sfml-audio-s",  "glew32",  "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
 
       filter "platforms:x86"
-         libdirs {"../libraries/sdl/lib/x86/"}
+         libdirs {"../libraries/sfml/lib/x86/lib/", "../libraries/glew/lib/x86/"}
          postbuildcommands {
-         "{COPY} ../libraries/sdl/lib/x86/SDL2.dll %{cfg.targetdir}"
+         "{COPY} ../libraries/sfml/lib/x86/bin/**.dll %{cfg.targetdir}"
       }
-
 
       filter "platforms:x64"
-         libdirs {"../libraries/sdl/lib/x64/"}
+         libdirs {"../libraries/sfml/lib/x64/lib/", "../libraries/glew/lib/x64"}
          postbuildcommands {
-         "{COPY} ../libraries/sdl/lib/x64/SDL2.dll %{cfg.targetdir}"
+         "{COPY} ../libraries/sfml/lib/x64/bin/**.dll %{cfg.targetdir}"
       }
+
+      filter "platforms:Windows"
+         defines{ "Win32"}
 
 
    project "Game"
@@ -54,30 +65,33 @@ workspace "EngineLearning"
       targetdir "../build/bin/%{cfg.buildcfg}"
       location "../build/"
       includedirs {
-      "../libraries/sdl/include/"
+      "../libraries/sfml/include/"
       }
 
       files { "game/*.h", "game/*.cpp" }
 
       filter "configurations:Debug"
-         defines { "DEBUG" }
+         defines { "SFML_STATIC", "DEBUG" }
          symbols "On"
-         links {"SDL2", "SDL2main", "SDL2test", "SDL2.dll"}
+         links {"sfml-graphics-s-d", "sfml-system-s-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-audio-s-d", "glew32",  "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
 
       filter "configurations:Release"
-         defines { "NDEBUG" }
+         defines {"SFML_STATIC" , "NDEBUG", "RELEASE",}
          optimize "On"
-         links {"SDL2", "SDL2main", "SDL2test", "SDL2.dll"}
+         links {"sfml-graphics-s", "sfml-system-s", "sfml-window-s", "sfml-network-s", "sfml-audio-s",  "glew32", "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
 
       filter "platforms:x86"
-         libdirs {"../libraries/sdl/lib/x86/"}
+         libdirs {"../libraries/sfml/lib/x86/lib/", "../libraries/glew/lib/x86/"}
          postbuildcommands {
-         "{COPY} ../libraries/sdl/lib/x86/SDL2.dll %{cfg.targetdir}"
+         "{COPY} ../libraries/sfml/lib/x86/bin/**.dll %{cfg.targetdir}"
       }
 
 
       filter "platforms:x64"
-         libdirs {"../libraries/sdl/lib/x64/"}
+         libdirs {"../libraries/sdl/lib/x64/lib/", "../libraries/glew/lib/x64/"}
          postbuildcommands {
-         "{COPY} ../libraries/sdl/lib/x64/SDL2.dll %{cfg.targetdir}"
+         "{COPY} ../libraries/sfml/lib/x64/bin/**.dll %{cfg.targetdir}"
       }
+
+      filter "platforms:Windows"
+         defines{ "Win32"}

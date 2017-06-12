@@ -1,4 +1,5 @@
 //Using SDL and standard IO
+#include "CoreDebug.h"
 #include "CoreEngine.h"
 #include "CoreUtils.h"
 #include <stdio.h>
@@ -12,7 +13,9 @@
 bool FormatText (const char* input, sf::Text& toSet) {
     sf::Font font;
 
-    if (!font.loadFromFile("Roboto-Light.ttf")) {
+    WindowsConfirmDirectory();
+
+    if (!font.loadFromFile("C:/Users/cplepel/Desktop/EngineLearning/build/bin/Debug/Roboto-Light.ttf")) {
         printf("ERROR LOADING FONT");
         return false;
     }
@@ -22,17 +25,6 @@ bool FormatText (const char* input, sf::Text& toSet) {
     toSet.setCharacterSize(24);
     //toSet.setColor(sf::Color::Red);
     return true;
-}
-
-int WindowsConfirmDirectory () {
-    TCHAR buf[256];
-    LPTSTR pBuf = buf;
-    int len = 256;
-    int bytes = GetModuleFileName(NULL, pBuf, len);
-    if (bytes == 0)
-        return -1;
-    else
-        return bytes;
 }
 
 int main (int argc, char* args[])

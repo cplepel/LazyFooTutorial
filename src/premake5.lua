@@ -36,7 +36,6 @@ workspace "EngineLearning"
 						["Render"] = {"engine/*Window*.*", "engine/*Render*.*"}
                }
 
-
       filter "configurations:Debug"
          defines { "SFML_STATIC","DEBUG" }
          symbols "On"
@@ -49,21 +48,10 @@ workspace "EngineLearning"
 
       filter "platforms:x86"
          libdirs {"../libraries/sfml/lib/x86/lib/", "../libraries/glew/lib/x86/"}
-   --      postbuildcommands {
-   --      "{COPY} ../libraries/sfml/lib/x86/bin/**.dll %{cfg.targetdir}",
-  --       "{COPY} ../data/fonts/**.* %{cfg.targetdir}"
-  --    }
 
       filter "platforms:x64"
          libdirs {"../libraries/sfml/lib/x64/lib/", "../libraries/glew/lib/x64"}
-        -- postbuildcommands {
-      --   "{COPY} ../libraries/sfml/lib/x64/bin/**.dll %{cfg.targetdir}",
-     --    "{COPY} ../data/fonts/**.* %{cfg.targetdir}"
-    --  }
-
-      filter "platforms:Windows"
-         defines{ "Win32"}
-
+		 
 
    project "Game"
       kind "ConsoleApp"
@@ -80,6 +68,7 @@ workspace "EngineLearning"
          defines { "SFML_STATIC", "DEBUG" }
          symbols "On"
          links {"sfml-graphics-s-d", "sfml-system-s-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-audio-s-d", "glew32",  "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
+         debugdir "%{cfg.targetdir}"
 
       filter "configurations:Release"
          defines {"SFML_STATIC" , "NDEBUG", "RELEASE",}
@@ -88,18 +77,7 @@ workspace "EngineLearning"
 
       filter "platforms:x86"
          libdirs {"../libraries/sfml/lib/x86/lib/", "../libraries/glew/lib/x86/"}
- --        postbuildcommands {
- ----        "{COPY} ../libraries/sfml/lib/x86/bin/**.dll %{cfg.targetdir}",
- --        "{COPY} ../data/fonts/**.* %{cfg.targetdir}"
-  --    }
 
 
       filter "platforms:x64"
          libdirs {"../libraries/sdl/lib/x64/lib/", "../libraries/glew/lib/x64/"}
-   --      postbuildcommands {
-   --      "{COPY} ../libraries/sfml/lib/x64/bin/**.dll %{cfg.targetdir}",
-   --      "{COPY} ../data/fonts/**.* %{cfg.targetdir}"
-   --   }
-
-      filter "platforms:Windows"
-         defines{ "Win32"}

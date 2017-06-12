@@ -22,21 +22,4 @@
 // LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //--------------------------------------------------------------------------------------------------
-
 #pragma once
-#if _WIN32
-#include <Windows.h>
-
-
-int WindowsConfirmDirectory () {
-    TCHAR buf[256];
-    LPTSTR pBuf = buf;
-    int len = 256;
-    int bytes = GetModuleFileName(NULL, pBuf, len);
-    if (bytes == 0)
-        return -1;
-    else
-        return bytes;
-}
-
-#endif

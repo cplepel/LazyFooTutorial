@@ -3,6 +3,37 @@
 #include "CoreUtils.h"
 #include <stdio.h>
 #include <SFML/Window.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include "Input.h"
+
+#include <windows.h>
+
+bool FormatText (const char* input, sf::Text& toSet) {
+    sf::Font font;
+
+    if (!font.loadFromFile("Roboto-Light.ttf")) {
+        printf("ERROR LOADING FONT");
+        return false;
+    }
+
+    toSet.setFont(font);
+    toSet.setString(input);
+    toSet.setCharacterSize(24);
+    //toSet.setColor(sf::Color::Red);
+    return true;
+}
+
+int WindowsConfirmDirectory () {
+    TCHAR buf[256];
+    LPTSTR pBuf = buf;
+    int len = 256;
+    int bytes = GetModuleFileName(NULL, pBuf, len);
+    if (bytes == 0)
+        return -1;
+    else
+        return bytes;
+}
 
 int main (int argc, char* args[])
 {
@@ -10,6 +41,7 @@ int main (int argc, char* args[])
     ref_(args);
 
     Engine engine;
+    WindowsConfirmDirectory();
     
     bool success = engine.Initialize();
     if (!success) {
@@ -17,19 +49,39 @@ int main (int argc, char* args[])
         return -1;
     }
 
-
-    sf::Window window(sf::VideoMode(800, 600), "My window");
-
+    sf::Text text;
     // run the program as long as the window is open
-    while (window.isOpen())
+    while (engine.GetRenderer().WindowIsOpen())
     {
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
-        while (window.pollEvent(event))
+        Window& window = engine.GetRenderer().GetWindow();
+        while (window.PollEvent(event))
         {
             // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                window.close();
+            if (event.type == sf::Event::Closed) {
+                window.Close();
+            }
+        }
+
+
+        sf::Text toDraw;
+        bool canDraw = false;
+        if (Input::IsKeyPressed(e_moveDownKey)) {
+            canDraw = FormatText("Down Pressed", toDraw);
+        }
+        else if (Input::IsKeyPressed(e_moveRightKey)) {
+            canDraw = FormatText("Right Pressed", toDraw);
+        }
+        else if (Input::IsKeyPressed(e_moveLeftKey)) {
+            canDraw = FormatText("Left Pressed", toDraw);
+        }
+        else if (Input::IsKeyPressed(e_moveUpKey)) {
+            canDraw = FormatText("Up Pressed", toDraw);
+        }
+
+        if (canDraw) {
+            engine.GetRenderer().DrawTextImmediate(toDraw);
         }
     }
     engine.Terminate();

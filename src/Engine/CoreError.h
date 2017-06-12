@@ -24,38 +24,8 @@
 //--------------------------------------------------------------------------------------------------
 #pragma once
 
-// We use FORWARD DECLARATION here to prevent having to include the h files for SDL here.
-// This helps compile time but can also prevent CIRCULAR INCLUDES. We will include
-// the h files in the cpp.
+#define ASSERT_IS_INTEGRAL (X) \
+    static_assert(std::is_integral<X>::value, "Only integers are allowed in this function.")
 
-#include <SFML/Graphics/RenderWindow.hpp>
-// Window wrapper.
-class Window {
-
-public:
-
-    //Screen dimension constants
-    // TODO CPP: These need to be data driven in an inl file.
-    static const int SCREEN_WIDTH = 640;
-    static const int SCREEN_HEIGHT = 480;
-
-    Window ();
-    ~Window ();
-    bool Initialize ();
-
-    bool Terminate ();
-
-    sf::RenderWindow& GetSFMLWindow () { return m_window; }
-
-    const sf::RenderWindow& GetSFMLWindow () const { return m_window; }
-
-    bool IsOpen () const { return m_window.isOpen(); }
-
-    bool PollEvent (sf::Event& event) { return m_window.pollEvent(event); }
-    void Close () { m_window.close(); }
-
-private:
-    //The window we'll be rendering to
-    sf::RenderWindow m_window{};
-
-};
+#define ASSERT_IS_NOT_INTEGRAL (X) \
+    static_assert(std::is_integral<X>::value == false, "Integers are not allowed in this function.")

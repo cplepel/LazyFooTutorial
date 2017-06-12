@@ -10,12 +10,13 @@ workspace "EngineLearning"
    warnings "Extra"
    flags {"FatalWarnings"}
    postbuildcommands {
-       "{COPY} ../data/images/**.bmp %{cfg.targetdir}"
+       "{COPY} ../data/images/**.bmp %{cfg.targetdir}",
+         "{COPY} ../data/fonts/**.* %{cfg.targetdir}"
    }
    project "Engine"
       kind "ConsoleApp"
       language "C++"
-      targetdir "/bin/%{cfg.buildcfg}"
+      targetdir "../build/bin/%{cfg.buildcfg}"
       location "../build/"
       includedirs {
       "../libraries/sfml/include/",
@@ -30,6 +31,9 @@ workspace "EngineLearning"
                         ["Engine"] = {"engine/*Engine*.h", "engine/*Engine*.cpp"} ,
                         ["Debug"] = {"engine/*Debug*.h", "engine/*Debug*.cpp"} ,
                         ["CoreUtils"] = {"engine/*Utils*.h", "engine/*Util*.cpp"} ,
+						["Input"] = {"engine/*Input*.h", "engine/InputBinding.h"} ,
+						["Math"] = {"engine/*Vect*.*", "engine/*Math*.*"},
+						["Render"] = {"engine/*Window*.*", "engine/*Render*.*"}
                }
 
 
@@ -45,15 +49,17 @@ workspace "EngineLearning"
 
       filter "platforms:x86"
          libdirs {"../libraries/sfml/lib/x86/lib/", "../libraries/glew/lib/x86/"}
-         postbuildcommands {
-         "{COPY} ../libraries/sfml/lib/x86/bin/**.dll %{cfg.targetdir}"
-      }
+   --      postbuildcommands {
+   --      "{COPY} ../libraries/sfml/lib/x86/bin/**.dll %{cfg.targetdir}",
+  --       "{COPY} ../data/fonts/**.* %{cfg.targetdir}"
+  --    }
 
       filter "platforms:x64"
          libdirs {"../libraries/sfml/lib/x64/lib/", "../libraries/glew/lib/x64"}
-         postbuildcommands {
-         "{COPY} ../libraries/sfml/lib/x64/bin/**.dll %{cfg.targetdir}"
-      }
+        -- postbuildcommands {
+      --   "{COPY} ../libraries/sfml/lib/x64/bin/**.dll %{cfg.targetdir}",
+     --    "{COPY} ../data/fonts/**.* %{cfg.targetdir}"
+    --  }
 
       filter "platforms:Windows"
          defines{ "Win32"}
@@ -82,16 +88,18 @@ workspace "EngineLearning"
 
       filter "platforms:x86"
          libdirs {"../libraries/sfml/lib/x86/lib/", "../libraries/glew/lib/x86/"}
-         postbuildcommands {
-         "{COPY} ../libraries/sfml/lib/x86/bin/**.dll %{cfg.targetdir}"
-      }
+ --        postbuildcommands {
+ ----        "{COPY} ../libraries/sfml/lib/x86/bin/**.dll %{cfg.targetdir}",
+ --        "{COPY} ../data/fonts/**.* %{cfg.targetdir}"
+  --    }
 
 
       filter "platforms:x64"
          libdirs {"../libraries/sdl/lib/x64/lib/", "../libraries/glew/lib/x64/"}
-         postbuildcommands {
-         "{COPY} ../libraries/sfml/lib/x64/bin/**.dll %{cfg.targetdir}"
-      }
+   --      postbuildcommands {
+   --      "{COPY} ../libraries/sfml/lib/x64/bin/**.dll %{cfg.targetdir}",
+   --      "{COPY} ../data/fonts/**.* %{cfg.targetdir}"
+   --   }
 
       filter "platforms:Windows"
          defines{ "Win32"}

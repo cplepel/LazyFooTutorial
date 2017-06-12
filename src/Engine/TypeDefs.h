@@ -21,41 +21,19 @@
 // BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
 // LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+
 #pragma once
 
-// We use FORWARD DECLARATION here to prevent having to include the h files for SDL here.
-// This helps compile time but can also prevent CIRCULAR INCLUDES. We will include
-// the h files in the cpp.
+#include <sfml/System/Vector2.hpp>
+#include <sfml/System/Vector3.hpp>
+// Note CPP: These type defs are just so we don't have the sf:: namespace everywhere in engine code.
+// More typedefs can be added. 
 
-#include <SFML/Graphics/RenderWindow.hpp>
-// Window wrapper.
-class Window {
-
-public:
-
-    //Screen dimension constants
-    // TODO CPP: These need to be data driven in an inl file.
-    static const int SCREEN_WIDTH = 640;
-    static const int SCREEN_HEIGHT = 480;
-
-    Window ();
-    ~Window ();
-    bool Initialize ();
-
-    bool Terminate ();
-
-    sf::RenderWindow& GetSFMLWindow () { return m_window; }
-
-    const sf::RenderWindow& GetSFMLWindow () const { return m_window; }
-
-    bool IsOpen () const { return m_window.isOpen(); }
-
-    bool PollEvent (sf::Event& event) { return m_window.pollEvent(event); }
-    void Close () { m_window.close(); }
-
-private:
-    //The window we'll be rendering to
-    sf::RenderWindow m_window{};
-
-};
+// Including math ones here so we dont include Math.h everywhere
+using Vect2i = sf::Vector2<int>;
+using Vect2f = sf::Vector2<float>;
+using Vect2u = sf::Vector2<unsigned int>;
+using Vect3i = sf::Vector3<int>;
+using Vect3f = sf::Vector3<float>;
+using Vect3u = sf::Vector3<unsigned int>;

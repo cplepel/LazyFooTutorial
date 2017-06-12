@@ -24,15 +24,30 @@
 //--------------------------------------------------------------------------------------------------
 #pragma once
 #include "Window.h"
-
+// This is a namespace-specific FORWARD DECLARATION
+namespace sf {
+    class Text;
+}
 class Renderer {
 public:
+
+    Renderer () = default;
+    ~Renderer () = default;
+
+    Renderer (const Renderer&) = delete;
+    void operator= (const Renderer& in) = delete;
 
     bool Initialize ();
     bool Terminate ();
 
     Window& GetWindow () { return m_window; }
     const Window& GetWindow () const { return m_window; }
+
+    void Draw ();
+
+    void DrawTextImmediate (sf::Text& text);
+
+    bool WindowIsOpen () const { return m_window.IsOpen(); }
 
 private:
     Window m_window;

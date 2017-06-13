@@ -9,9 +9,9 @@
 #include "Input.h"
 
 #include <windows.h>
+sf::Font font;
 
 bool FormatText (const char* input, sf::Text& toSet) {
-    sf::Font font;
 
     WindowsConfirmDirectory();
 

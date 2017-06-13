@@ -15,7 +15,7 @@ bool FormatText (const char* input, sf::Text& toSet) {
 
     WindowsConfirmDirectory();
 
-    if (!font.loadFromFile("C:/Users/cplepel/Desktop/EngineLearning/build/bin/Debug/Roboto-Light.ttf")) {
+    if (!font.loadFromFile("Roboto-Light.ttf")) {
         printf("ERROR LOADING FONT");
         return false;
     }
@@ -33,6 +33,7 @@ int main (int argc, char* args[])
     ref_(args);
 
     Engine engine;
+    engine.Initialize();
     WindowsConfirmDirectory();
     
     bool success = engine.Initialize();

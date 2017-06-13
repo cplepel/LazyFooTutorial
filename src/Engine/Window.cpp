@@ -3,8 +3,7 @@
 #include <assert.h>
 
 //--------------------------------------------------------------------------------------------------
-Window::Window () 
-    : m_window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Engine") {
+Window::Window () {
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -13,6 +12,8 @@ Window::~Window () {
 
 //--------------------------------------------------------------------------------------------------
 bool Window::Initialize () {
+    // TODO CPP: ContextSettings here.
+    m_window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Engine");
     return true;
 }
 

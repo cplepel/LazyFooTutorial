@@ -2,7 +2,7 @@
 
 -- premake5.lua
 workspace "EngineLearning"
-   configurations { "Debug", "Release", "CodyTime" }
+   configurations { "Debug", "Release" }
    location "../build/"
 
    platforms {"Native", "x86", "x64", "Windows", "Mac"}
@@ -24,7 +24,6 @@ workspace "EngineLearning"
       }
 
 
-
       files { "engine/*.h", "engine/*.cpp" }
 
 	  vpaths {
@@ -40,11 +39,13 @@ workspace "EngineLearning"
          defines { "SFML_STATIC","DEBUG" }
          symbols "On"
          links {"sfml-graphics-s-d", "sfml-system-s-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-audio-s-d",  "glew32",  "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
+	     debugdir "../build/bin/Debug"
 
       filter "configurations:Release"
          defines { "SFML_STATIC", "NDEBUG", "RELEASE" }
          optimize "On"
          links {"sfml-graphics-s", "sfml-system-s", "sfml-window-s", "sfml-network-s", "sfml-audio-s",  "glew32",  "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
+	     debugdir "../build/bin/Release"
 
       filter "platforms:x86"
          libdirs {"../libraries/sfml/lib/x86/lib/", "../libraries/glew/lib/x86/"}
@@ -68,7 +69,6 @@ workspace "EngineLearning"
          defines { "SFML_STATIC", "DEBUG" }
          symbols "On"
          links {"sfml-graphics-s-d", "sfml-system-s-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-audio-s-d", "glew32",  "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
-         debugdir "%{cfg.targetdir}"
 
       filter "configurations:Release"
          defines {"SFML_STATIC" , "NDEBUG", "RELEASE",}

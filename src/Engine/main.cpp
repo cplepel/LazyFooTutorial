@@ -7,6 +7,9 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include "Input.h"
+#include "../Encosys/EntityManager.h"
+#include "RenderSystem.h"
+#include "TextureManager.h"
 
 #include <windows.h>
 sf::Font font;
@@ -27,10 +30,10 @@ bool FormatText (const char* input, sf::Text& toSet) {
     return true;
 }
 
-int main (int argc, char* args[])
-{
+int main (int argc, char* args[]) {
     ref_(argc);
     ref_(args);
+
 
     Engine engine;
     engine.Initialize();
@@ -42,13 +45,24 @@ int main (int argc, char* args[])
         return -1;
     }
 
+    Window& window = engine.GetRenderer().GetWindow();
+
+    ECS::EntityManager entityManager;
+    entityManager.RegisterSystem<RenderSystem>(window);
+
+    TextureManager textureManager;
+
+    ECS::Entity player = entityManager.Create();
+    entityManager.AddComponent<PositionComponent>(player, 50.f, 50.f);
+    entityManager.AddComponent<TextureComponent>(player, textureManager.LoadTexture("doot.png"));
+
     sf::Text text;
     // run the program as long as the window is open
+    auto lastFrameTime = std::chrono::high_resolution_clock::now();
     while (engine.GetRenderer().WindowIsOpen())
     {
         // check all the window's events that were triggered since the last iteration of the loop
         sf::Event event;
-        Window& window = engine.GetRenderer().GetWindow();
         while (window.PollEvent(event))
         {
             // "close requested" event: we close the window
@@ -57,20 +71,28 @@ int main (int argc, char* args[])
             }
         }
 
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        const float milliElapsed = std::chrono::duration<float, std::milli>(currentTime - lastFrameTime).count();
+        entityManager.RunSystems(milliElapsed);
+        lastFrameTime = currentTime;
 
         sf::Text toDraw;
         bool canDraw = false;
         if (Input::IsKeyPressed(e_moveDownKey)) {
-            canDraw = FormatText("Down Pressed", toDraw);
+            entityManager.GetComponent<PositionComponent>(player).m_y += milliElapsed;
+            // canDraw = FormatText("Down Pressed", toDraw);
         }
-        else if (Input::IsKeyPressed(e_moveRightKey)) {
-            canDraw = FormatText("Right Pressed", toDraw);
+        if (Input::IsKeyPressed(e_moveRightKey)) {
+            entityManager.GetComponent<PositionComponent>(player).m_x += milliElapsed;
+            // canDraw = FormatText("Right Pressed", toDraw);
         }
-        else if (Input::IsKeyPressed(e_moveLeftKey)) {
-            canDraw = FormatText("Left Pressed", toDraw);
+        if (Input::IsKeyPressed(e_moveLeftKey)) {
+            entityManager.GetComponent<PositionComponent>(player).m_x -= milliElapsed;
+            // canDraw = FormatText("Left Pressed", toDraw);
         }
-        else if (Input::IsKeyPressed(e_moveUpKey)) {
-            canDraw = FormatText("Up Pressed", toDraw);
+        if (Input::IsKeyPressed(e_moveUpKey)) {
+            entityManager.GetComponent<PositionComponent>(player).m_y -= milliElapsed;
+            // canDraw = FormatText("Up Pressed", toDraw);
         }
 
         if (canDraw) {

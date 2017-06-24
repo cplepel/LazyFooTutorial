@@ -47,7 +47,7 @@ int main (int argc, char* args[]) {
 
     Window& window = engine.GetRenderer().GetWindow();
 
-    ECS::EntityManager entityManager;
+    EncosysManager entityManager;
     entityManager.RegisterSystem<RenderSystem>(window);
 
     TextureManager textureManager;

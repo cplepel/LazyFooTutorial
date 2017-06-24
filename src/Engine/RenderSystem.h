@@ -1,14 +1,12 @@
 #pragma once
 
-#include "../Encosys/Entity.h"
 #include "../Encosys/System.h"
 #include "TextureManager.h"
-#include "PositionComponent.h"
-#include "TextureComponent.h"
+#include "CoreEngine.h"
 
 class Window;
 
-class RenderSystem : public ECS::CSystem {
+class RenderSystem : public ECS::System {
 public:
     explicit RenderSystem (Window& window) : m_window(window) {}
 

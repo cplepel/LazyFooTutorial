@@ -28,3 +28,18 @@
 #include "Engine.h"
 // TODO: This needs its own logging wrapper.
 #include <stdio.h>
+#include "../Encosys/EntityManager.h"
+
+#include "PositionComponent.h"
+#include "TextureComponent.h"
+
+using ComponentList = ECS::TypeList<
+    PositionComponent,
+    TextureComponent
+>;
+using EncosysManager = ECS::EntityManager<ComponentList>;
+
+#ifndef Assert_
+#include <cassert>
+#define Assert_(EXPR) assert(EXPR)
+#endif

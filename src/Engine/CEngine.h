@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 //
-// Copyright 2017 Cody Plepel
+// Copyright 2017 Cody Plepel, Cat Morgan, Matthew Grubb, Geoff Tucker
 //
 // SDL2 Used under the ZLIB license.
 //
@@ -21,34 +21,21 @@
 // BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
 // LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
+
 #pragma once
-#include "Window.h"
-// This is a namespace-specific FORWARD DECLARATION
-namespace sf {
-    class Text;
-}
-class Renderer {
+#include "CRenderer.h"
+
+class CEngine {
 public:
 
-    Renderer () = default;
-    ~Renderer () = default;
-
-    Renderer (const Renderer&) = delete;
-    void operator= (const Renderer& in) = delete;
-
     bool Initialize ();
+
     bool Terminate ();
 
-    Window& GetWindow () { return m_window; }
-    const Window& GetWindow () const { return m_window; }
-
-    void Draw ();
-
-    void DrawTextImmediate (sf::Text& text);
-
-    bool WindowIsOpen () const { return m_window.IsOpen(); }
+    CRenderer& GetRenderer () { return m_renderer; }
+    const CRenderer& GetRenderer () const { return m_renderer; }
 
 private:
-    Window m_window;
+    CRenderer  m_renderer;
 };

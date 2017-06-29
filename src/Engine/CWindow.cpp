@@ -1,23 +1,29 @@
 
-#include "Window.h"
+#include "CWindow.h"
 #include <assert.h>
 
 //--------------------------------------------------------------------------------------------------
-Window::Window () {
+CWindow::CWindow () {
 }
 
 //--------------------------------------------------------------------------------------------------
-Window::~Window () {
+CWindow::~CWindow () {
 }
 
 //--------------------------------------------------------------------------------------------------
-bool Window::Initialize () {
+bool CWindow::Initialize () {
     // TODO CPP: ContextSettings here.
-    m_window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Engine");
+    auto& videoModes = sf::VideoMode::getFullscreenModes();
+    if (videoModes.empty()) {
+        m_window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Engine");
+    }
+    else {
+        m_window.create(videoModes[0], "Engine");
+    }
     return true;
 }
 
 //--------------------------------------------------------------------------------------------------
-bool Window::Terminate() {
+bool CWindow::Terminate() {
     return true;
 }

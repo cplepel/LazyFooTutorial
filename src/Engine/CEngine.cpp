@@ -3,12 +3,12 @@
 #include <assert.h>
 
 //--------------------------------------------------------------------------------------------------
-bool Engine::Initialize () {
+bool CEngine::Initialize () {
     return m_renderer.Initialize();
 }
 
 //--------------------------------------------------------------------------------------------------
-bool Engine::Terminate() {
+bool CEngine::Terminate() {
 
     bool success = m_renderer.Terminate();
     assert(success);

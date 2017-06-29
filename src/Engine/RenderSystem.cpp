@@ -1,7 +1,7 @@
 #include "RenderSystem.h"
-#include "Renderer.h"
+#include "CRenderer.h"
 #include <SFML/Graphics.hpp>
-#include "Window.h"
+#include "CWindow.h"
 
 static sf::CircleShape shape(1.f);
 
@@ -13,8 +13,8 @@ void RenderSystem::PostUpdate () {
     m_window.GetSFMLWindow().display();
 }
 
-void RenderSystem::Update (ECS::Entity, const PositionComponent& position, const TextureComponent& texture) {
-    if (const Texture* tex = Texture::Deref(texture.m_tag)) {
+void RenderSystem::Update (ECS::Entity, const SPositionComponent& position, const STextureComponent& texture) {
+    if (const CTexture* tex = CTexture::Deref(texture.m_tag)) {
         sf::Sprite sprite;
         sprite.setTexture(tex->GetTexture());
         sprite.setPosition(position.m_x, position.m_y);

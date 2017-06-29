@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 //
-// Copyright 2017 Cody Plepel
+// Copyright 2017 Cody Plepel, Cat Morgan, Matthew Grubb, Geoff Tucker
 //
 // SDL2 Used under the ZLIB license.
 //

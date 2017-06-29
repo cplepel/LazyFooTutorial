@@ -4,7 +4,7 @@
 
 namespace ECS {
 
-template <typename ComponentList> class EntityManager;
+template <typename TComponentList> class EntityManager;
 
 class System {
 public:
@@ -18,7 +18,7 @@ protected:
     EntityManager* EntityManager () { return static_cast<EntityManager*>(m_entityManager); }
 
 private:
-    template <typename ComponentList> friend class EntityManager;
+    template <typename TComponentList> friend class EntityManager;
     void* m_entityManager{};
     float m_deltaTime{};
 };

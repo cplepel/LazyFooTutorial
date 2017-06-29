@@ -1,20 +1,20 @@
 #pragma once
 
 #include "../Encosys/System.h"
-#include "TextureManager.h"
+#include "CTextureManager.h"
 #include "CoreEngine.h"
 
-class Window;
+class CWindow;
 
 class RenderSystem : public ECS::System {
 public:
-    explicit RenderSystem (Window& window) : m_window(window) {}
+    explicit RenderSystem (CWindow& window) : m_window(window) {}
 
     virtual void PreUpdate () override;
     virtual void PostUpdate () override;
 
-    void Update (ECS::Entity entity, const PositionComponent& position, const TextureComponent& texture);
+    void Update (ECS::Entity entity, const SPositionComponent& position, const STextureComponent& texture);
 
 private:
-    Window& m_window;
+    CWindow& m_window;
 };

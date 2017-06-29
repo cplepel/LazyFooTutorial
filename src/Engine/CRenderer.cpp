@@ -1,22 +1,22 @@
-#include "Renderer.h"
+#include "CRenderer.h"
 #include "SFML/Graphics/Text.hpp"
 
 //--------------------------------------------------------------------------------------------------
-bool Renderer::Initialize () {
+bool CRenderer::Initialize () {
     // Unused atm
     // If window gets more complicated initialization i will switch
     return m_window.Initialize();
 }
 
 //--------------------------------------------------------------------------------------------------
-bool Renderer::Terminate () {
+bool CRenderer::Terminate () {
     return m_window.Terminate();
 }
 
 
 //----------------------------------------------------------------------------------------------
 // CPP TODO: Convert this to take an entity or make a pipeline
-void Renderer::Draw () {
+void CRenderer::Draw () {
     auto& win = m_window.GetSFMLWindow();
     win.clear();
 
@@ -24,7 +24,7 @@ void Renderer::Draw () {
 }
 
 //----------------------------------------------------------------------------------------------
-void Renderer::DrawTextImmediate (sf::Text& text) {
+void CRenderer::DrawTextImmediate (sf::Text& text) {
     auto& win = m_window.GetSFMLWindow();
     win.clear();
 

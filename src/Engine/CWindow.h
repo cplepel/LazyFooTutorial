@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 //
-// Copyright 2017 Cody Plepel
+// Copyright 2017 Cody Plepel, Cat Morgan, Matthew Grubb, Geoff Tucker
 //
 // SDL2 Used under the ZLIB license.
 //
@@ -30,7 +30,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 // Window wrapper.
-class Window {
+class CWindow {
 
 public:
 
@@ -39,8 +39,8 @@ public:
     static const int SCREEN_WIDTH = 640;
     static const int SCREEN_HEIGHT = 480;
 
-    Window ();
-    ~Window ();
+    CWindow ();
+    ~CWindow ();
     bool Initialize ();
 
     bool Terminate ();

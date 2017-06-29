@@ -1,3 +1,27 @@
+//--------------------------------------------------------------------------------------------------
+//
+// Copyright 2017 Cody Plepel, Cat Morgan, Matthew Grubb, Geoff Tucker
+//
+// SDL2 Used under the ZLIB license.
+//
+// Redistribution and use in source and binary forms, with or without modification, are permitted 
+// provided that the following conditions are met :
+//
+// 1. Redistributions of source code must retain the above copyright notice, this list of conditions and 
+// the following disclaimer.
+//
+// 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions 
+// and the following disclaimer in the documentation and / or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED 
+// WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND 
+// FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS
+// BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES(INCLUDING, 
+// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR 
+// BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+// LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
+// THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//----------------------------------------------------------------------------------------------
 #pragma once
 
 #include <mutex>
@@ -6,7 +30,7 @@
 #include <utility>
 
 template <typename TObject, size_t PoolSize>
-class TagAllocator;
+class CTagAllocator;
 
 template <typename TObject, size_t PoolSize>
 class Tag {
@@ -16,18 +40,18 @@ public:
     bool IsAssigned () const { return m_counter > 0; }
 
 private:
-    friend TagAllocator<TObject, PoolSize>;
+    friend CTagAllocator<TObject, PoolSize>;
     uint32_t m_index;
     uint32_t m_counter;
 };
 
 template <typename TObject, size_t PoolSize>
-class TagRecycler {
+class CTagRecycler {
 public:
     using TagType = Tag<TObject, PoolSize>;
     using TagAllocator = TagAllocator<TObject, PoolSize>;
 
-    TagRecycler () : m_tag() {}
+    CTagRecycler () : m_tag() {}
     TagType Tag () const { return m_tag; }
 
     static TObject* Create ();
@@ -39,32 +63,33 @@ private:
 };
 
 template <typename TObject, size_t PoolSize>
-class TagAllocator {
+class CTagAllocator {
 public:
-    static TagAllocator& Get () {
-        static TagAllocator allocator;
+    static CTagAllocator& Get () {
+        static CTagAllocator allocator;
         return allocator;
     }
 
     using Tag = Tag<TObject, PoolSize>;
 
-    TagAllocator () {
+    CTagAllocator () {
         InitPool();
     }
 
-    TagAllocator (const TagAllocator&) = delete;
-    TagAllocator (TagAllocator&&) = delete;
+    CTagAllocator (const CTagAllocator&) = delete;
+    CTagAllocator (CTagAllocator&&) = delete;
 
-    virtual ~TagAllocator () {}
+    virtual ~CTagAllocator () {}
 
-    TagAllocator& operator= (const TagAllocator&) = delete;
-    TagAllocator& operator= (TagAllocator&&) = delete;
+    CTagAllocator& operator= (const CTagAllocator&) = delete;
+    CTagAllocator& operator= (CTagAllocator&&) = delete;
 
     Tag Create () {
         return Create<>();
     }
 
     TObject* Deref (Tag tag) {
+        // $NOTE CPP: This might be very expensive and a bad spot for a mutex.
         std::lock_guard<std::mutex> lock(m_mutex);
         assert(tag.m_index >= 0 && tag.m_index < PoolSize);
         PoolNode& node = m_pool[tag.m_index];
@@ -132,21 +157,21 @@ private:
 };
 
 template <typename TObject, size_t PoolSize>
-TObject* TagRecycler<TObject, PoolSize>::Create () {
-    const TagType tag = TagAllocator::Get().Create();
-    TObject* created = TagAllocator::Get().Deref(tag);
-    if (auto* recycler = static_cast<TagRecycler<TObject, PoolSize>*>(created)) {
+TObject* CTagRecycler<TObject, PoolSize>::Create () {
+    const TagType tag = CTagAllocator::Get().Create();
+    TObject* created = CTagAllocator::Get().Deref(tag);
+    if (auto* recycler = static_cast<CTagRecycler<TObject, PoolSize>*>(created)) {
         recycler->m_tag = tag;
     }
     return created;
 }
 
 template <typename TObject, size_t PoolSize>
-TObject* TagRecycler<TObject, PoolSize>::Deref (TagType tag) {
+TObject* CTagRecycler<TObject, PoolSize>::Deref (TagType tag) {
     return TagAllocator::Get().Deref(tag);
 }
 
 template <typename TObject, size_t PoolSize>
-void TagRecycler<TObject, PoolSize>::Destroy (TagType tag) {
+void CTagRecycler<TObject, PoolSize>::Destroy (TagType tag) {
     return TagAllocator::Get().Deallocate(tag);
 }

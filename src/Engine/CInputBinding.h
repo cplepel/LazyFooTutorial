@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 //
-// Copyright 2017 Cody Plepel
+// Copyright 2017 Cody Plepel, Cat Morgan, Matthew Grubb, Geoff Tucker
 //
 // SDL2 Used under the ZLIB license.
 //
@@ -36,7 +36,7 @@
 
 // Inspired by dabbertorres
 template <typename T>
-class InputBinding {
+class CInputBinding {
     // This leverages some "simple" template-fu to detect if the template type
     // we have for this binding is the same as Mouse button. If it is, use their release type
     // if it is not, use the keyboards. This will not work for joysticks yet.
@@ -48,7 +48,7 @@ public:
     // template argument a signature. In this case void Func(const sf::Time& t);
     using TCallback = std::is_function<void(const sf::Time&)>;
 
-    explicit InputBinding (T in, const TCallback& c, bool p = false) 
+    explicit CInputBinding (T in, const TCallback& c, bool p = false) 
         : m_input(in), m_callback(c), m_onPress(p) {
 
     }
@@ -102,7 +102,7 @@ private:
 template <typename T>
 class BindingManager {
 public:
-    using BindingType = InputBinding<T>;
+    using BindingType = CInputBinding<T>;
 
     void Add (T input, const typename BindingType::TCallback& f, bool onPress = false) {
         m_bindings.emplace_back(input, f, onPress);

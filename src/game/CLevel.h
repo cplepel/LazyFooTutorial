@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 //
-// Copyright 2017 Cody Plepel
+// Copyright 2017 Cody Plepel, Cat Morgan, Matthew Grubb, Geoff Tucker
 //
 // SDL2 Used under the ZLIB license.
 //
@@ -22,57 +22,8 @@
 // LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //----------------------------------------------------------------------------------------------
-
 #pragma once
 
-#include "TypeDefs.h"
-#include "InputBinding.h"
+class CLevel {
 
-class Window;
-
-enum EMoveKeys {
-    e_moveUpKey,
-    e_moveDownKey,
-    e_moveRightKey,
-    e_moveLeftKey
-};
-
-class Input {
-public:
-    static Vect2i GetMousePosition () {
-        return sf::Mouse::getPosition();
-    }
-
-    static Vect2i GetMousePosition (Window& win);
-
-    Input& GetGlobalInput () {
-        static Input s_instance;
-        return s_instance;
-    }
-
-    template <typename TCallback>
-    void AddBinding (sf::Keyboard::Key key, const TCallback& cb, bool onPress = false) {
-        m_keyboardBinds.Add(key, cb, onPress);
-    }
-
-    //----------------------------------------------------------------------------------------------
-    // NOTE CPP: Maybe this is horrible.
-    static bool IsKeyPressed (EMoveKeys key) {
-        switch (key) {
-        case e_moveRightKey:
-            return sf::Keyboard::isKeyPressed(sf::Keyboard::D);
-        case e_moveLeftKey:
-            return sf::Keyboard::isKeyPressed(sf::Keyboard::A);
-        case e_moveUpKey:
-            return sf::Keyboard::isKeyPressed(sf::Keyboard::W);
-        case e_moveDownKey:
-            return sf::Keyboard::isKeyPressed(sf::Keyboard::S);
-        default:
-            return false;
-        }
-    }
-
-    
-private:
-    KeyboardBinds  m_keyboardBinds;
 };

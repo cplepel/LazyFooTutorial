@@ -6,10 +6,10 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include "Input.h"
+#include "CInput.h"
 #include "../Encosys/EntityManager.h"
 #include "RenderSystem.h"
-#include "TextureManager.h"
+#include "CTextureManager.h"
 
 #include <windows.h>
 sf::Font font;
@@ -35,7 +35,7 @@ int main (int argc, char* args[]) {
     ref_(args);
 
 
-    Engine engine;
+    CEngine engine;
     engine.Initialize();
     WindowsConfirmDirectory();
     
@@ -45,16 +45,16 @@ int main (int argc, char* args[]) {
         return -1;
     }
 
-    Window& window = engine.GetRenderer().GetWindow();
+    CWindow& window = engine.GetRenderer().GetWindow();
 
-    EncosysManager entityManager;
+    TEncosysManager entityManager;
     entityManager.RegisterSystem<RenderSystem>(window);
 
-    TextureManager textureManager;
+    CTextureManager textureManager;
 
     ECS::Entity player = entityManager.Create();
-    entityManager.AddComponent<PositionComponent>(player, 50.f, 50.f);
-    entityManager.AddComponent<TextureComponent>(player, textureManager.LoadTexture("doot.png"));
+    entityManager.AddComponent<SPositionComponent>(player, 50.f, 50.f);
+    entityManager.AddComponent<STextureComponent>(player, textureManager.LoadTexture("doot.png"));
 
     sf::Text text;
     // run the program as long as the window is open
@@ -78,20 +78,20 @@ int main (int argc, char* args[]) {
 
         sf::Text toDraw;
         bool canDraw = false;
-        if (Input::IsKeyPressed(e_moveDownKey)) {
-            entityManager.GetComponent<PositionComponent>(player).m_y += milliElapsed;
+        if (CInput::IsKeyPressed(e_moveDownKey)) {
+            entityManager.GetComponent<SPositionComponent>(player).m_y += milliElapsed;
             // canDraw = FormatText("Down Pressed", toDraw);
         }
-        if (Input::IsKeyPressed(e_moveRightKey)) {
-            entityManager.GetComponent<PositionComponent>(player).m_x += milliElapsed;
+        if (CInput::IsKeyPressed(e_moveRightKey)) {
+            entityManager.GetComponent<SPositionComponent>(player).m_x += milliElapsed;
             // canDraw = FormatText("Right Pressed", toDraw);
         }
-        if (Input::IsKeyPressed(e_moveLeftKey)) {
-            entityManager.GetComponent<PositionComponent>(player).m_x -= milliElapsed;
+        if (CInput::IsKeyPressed(e_moveLeftKey)) {
+            entityManager.GetComponent<SPositionComponent>(player).m_x -= milliElapsed;
             // canDraw = FormatText("Left Pressed", toDraw);
         }
-        if (Input::IsKeyPressed(e_moveUpKey)) {
-            entityManager.GetComponent<PositionComponent>(player).m_y -= milliElapsed;
+        if (CInput::IsKeyPressed(e_moveUpKey)) {
+            entityManager.GetComponent<SPositionComponent>(player).m_y -= milliElapsed;
             // canDraw = FormatText("Up Pressed", toDraw);
         }
 

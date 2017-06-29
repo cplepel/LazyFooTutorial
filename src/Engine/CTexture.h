@@ -21,9 +21,24 @@
 // BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
 // LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 #pragma once
 
+#include <SFML/Graphics/Texture.hpp>
+#include "CTagAllocator.h"
 
-#define ref_(x) x
-#define unused_(x)
+static constexpr size_t g_texturePoolSize = 1024;
+
+class CTexture : public CTagRecycler<CTexture, g_texturePoolSize> {
+public:
+    using TTagType = CTagRecycler<CTexture, g_texturePoolSize>::TagType;
+
+    bool LoadFromFile (const char* fileName);
+
+    sf::Texture& GetTexture () { return m_texture; }
+    const sf::Texture& GetTexture () const { return m_texture; }
+
+private:
+    sf::Texture m_texture{};
+};
+using TTextureTag = CTexture::TTagType;

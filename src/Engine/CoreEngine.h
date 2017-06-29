@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 //
-// Copyright 2017 Cody Plepel
+// Copyright 2017 Cody Plepel, Cat Morgan, Matthew Grubb, Geoff Tucker
 //
 // SDL2 Used under the ZLIB license.
 //
@@ -25,19 +25,19 @@
 
 #pragma once
 
-#include "Engine.h"
+#include "CEngine.h"
 // TODO: This needs its own logging wrapper.
 #include <stdio.h>
 #include "../Encosys/EntityManager.h"
 
-#include "PositionComponent.h"
-#include "TextureComponent.h"
+#include "SPositionComponent.h"
+#include "STextureComponent.h"
 
-using ComponentList = ECS::TypeList<
-    PositionComponent,
-    TextureComponent
+using TComponentList = ECS::TypeList<
+    SPositionComponent,
+    STextureComponent
 >;
-using EncosysManager = ECS::EntityManager<ComponentList>;
+using TEncosysManager = ECS::EntityManager<TComponentList>;
 
 #ifndef Assert_
 #include <cassert>

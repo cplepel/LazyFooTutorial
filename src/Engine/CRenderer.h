@@ -23,7 +23,32 @@
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //--------------------------------------------------------------------------------------------------
 #pragma once
+#include "CWindow.h"
+// This is a namespace-specific FORWARD DECLARATION
+namespace sf {
+    class Text;
+}
+class CRenderer {
+public:
 
+    CRenderer () = default;
+    ~CRenderer () = default;
 
-#define ref_(x) x
-#define unused_(x)
+    CRenderer (const CRenderer&) = delete;
+    void operator= (const CRenderer& in) = delete;
+
+    bool Initialize ();
+    bool Terminate ();
+
+    CWindow& GetWindow () { return m_window; }
+    const CWindow& GetWindow () const { return m_window; }
+
+    void Draw ();
+
+    void DrawTextImmediate (sf::Text& text);
+
+    bool WindowIsOpen () const { return m_window.IsOpen(); }
+
+private:
+    CWindow m_window;
+};

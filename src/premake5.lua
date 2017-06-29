@@ -8,7 +8,7 @@ workspace "EngineLearning"
     platforms {"Native", "x86", "x64", "Windows", "Mac"}
     
     warnings "Extra"
-    flags {"FatalWarnings"}
+    flags {"FatalWarnings", "MultiProcessorCompile"}
     postbuildcommands {
         "{COPY} ../data/images/**.* %{cfg.targetdir}",
         "{COPY} ../data/fonts/**.* %{cfg.targetdir}"

@@ -24,13 +24,15 @@
 //----------------------------------------------------------------------------------------------
 #pragma once
 
-// forward declaration for the room pointers.
-class CRoom;
+// Donno if sfml has a quad, so im making one
 
-class CLevel {
-public:
+template <typename T>
+struct SQuad {
 
-private:
-    // A level has a list of rooms
-    
+    T GetArea () { return m_sides.x * m_sides.y; }
+
+    Vector2<T> m_sides;
 };
+
+using Quadi = SQuad<int>;
+using Quadf = SQuad<float>;

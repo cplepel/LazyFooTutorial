@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 //
-// Copyright 2017 Cody Plepel
+// Copyright 2017 Cody Plepel, Cat Morgan, Matthew Grubb, Geoff Tucker
 //
 // SDL2 Used under the ZLIB license.
 //
@@ -21,15 +21,31 @@
 // BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
 // LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//--------------------------------------------------------------------------------------------------
-
+//----------------------------------------------------------------------------------------------
 #pragma once
-#include <string>
 
-struct SDL_Surface;
+#include "GameDefines.h"
+#include "TypeDefs.h"
+#include "SQuad.h"
 
-class ResourceManager {
+const int c_adjoiningRoomCountMax = 4;
+
+class CRoom {
 public:
+
+    CRoom () : m_position(0.f, 0.f) {};
+    ~CRoom() {};
+
+    CRoom** GetConnectedRooms () { return m_connectedRooms; }
+
+    CRoom* GetRoom (NGame::ERoomDirections dir) { return m_connectedRooms[(int)dir]; }
+
+    bool HasRoom (NGame::ERoomDirections dir) { return m_connectedRooms[(int)dir] != nullptr; }
+
 private:
+    // $NOTE CPP: This is 100% not the way we should store levels. Should discuss.
+    CRoom* m_connectedRooms[NGame::e_directionCount];
+    Vect2f m_position{};
+    Quadf  m_roomSize{};
 
 };

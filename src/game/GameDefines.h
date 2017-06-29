@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 //
-// Copyright 2017 Cody Plepel
+// Copyright 2017 Cody Plepel, Cat Morgan, Matthew Grubb, Geoff Tucker
 //
 // SDL2 Used under the ZLIB license.
 //
@@ -22,10 +22,17 @@
 // LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //----------------------------------------------------------------------------------------------
-
 #pragma once
 
 
-class Vect2i {
+namespace NGame {
 
-};
+    enum ERoomDirections {
+        e_north,
+        e_east,
+        e_south,
+        e_west,
+        e_directionCount = 4
+    };
+
+}

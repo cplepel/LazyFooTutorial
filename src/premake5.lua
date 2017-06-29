@@ -60,10 +60,17 @@ workspace "EngineLearning"
         targetdir "../build/bin/%{cfg.buildcfg}"
         location "../build/"
         includedirs {
-            "../libraries/sfml/include/"
+            "../libraries/sfml/include/",
+            "Engine/",
+            "EncoSys"
         }
 
         files { "game/*.h", "game/*.cpp" }
+
+        vpaths {
+            ["World"] = {"game/CWorld*.*", "game/CRoom*.*", "game/CLevel*.*"} ,
+            ["GameCore"] = {"game/Game*.*"} 
+        }
 
         filter "configurations:Debug"
             defines { "SFML_STATIC", "DEBUG" }

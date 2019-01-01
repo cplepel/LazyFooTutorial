@@ -24,9 +24,5 @@
 //----------------------------------------------------------------------------------------------
 #pragma once
 
-#include "CTexture.h"
-
 struct STextureComponent {
-    explicit STextureComponent (TTextureTag tag) : m_tag(tag) {}
-    TTextureTag m_tag{};
 };

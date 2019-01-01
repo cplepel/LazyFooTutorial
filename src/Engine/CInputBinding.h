@@ -28,11 +28,6 @@
 #include <functional>
 #include <type_traits>
 #include <vector>
-#include <SFML/System/Clock.hpp>
-#include <SFML/System/Time.hpp>
-#include <SFML/Window/Event.hpp>
-#include <SFML/Window/Keyboard.hpp>
-#include <SFML/Window/Mouse.hpp>
 
 // Inspired by dabbertorres
 template <typename T>

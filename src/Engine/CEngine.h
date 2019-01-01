@@ -24,7 +24,6 @@
 //----------------------------------------------------------------------------------------------
 
 #pragma once
-#include "CRenderer.h"
 
 class CEngine {
 public:
@@ -33,9 +32,6 @@ public:
 
     bool Terminate ();
 
-    CRenderer& GetRenderer () { return m_renderer; }
-    const CRenderer& GetRenderer () const { return m_renderer; }
 
 private:
-    CRenderer  m_renderer;
 };

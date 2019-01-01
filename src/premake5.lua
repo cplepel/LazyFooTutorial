@@ -19,7 +19,7 @@ workspace "EngineLearning"
         targetdir "../build/bin/%{cfg.buildcfg}"
         location "../build/"
         includedirs {
-            "../libraries/sfml/include/",
+            "../libraries/SDL/include/",
             "../libraries/glew/include/"
         }
 
@@ -32,27 +32,31 @@ workspace "EngineLearning"
             ["Input"] = {"engine/*Input*.h", "engine/InputBinding.h"} ,
             ["Math"] = {"engine/*Vect*.*", "engine/*Math*.*"},
             ["Render"] = {"engine/*Window*.*", "engine/*Render*.*"},
-            ["Encosys"] = {"Encosys/*"}
+            ["Encosys"] = {"Encosys/*"},
+            ["Camera"] = {"Engine/CCamera*.*"}
         }
 
         filter "configurations:Debug"
-            defines { "SFML_STATIC","DEBUG" }
+            defines { "DEBUG" }
             symbols "On"
-            links {"sfml-graphics-s-d", "sfml-system-s-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-audio-s-d",  "glew32",  "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
+            links {  "SDL2", "SDL2Main", "SDL2Test"}
             debugdir "../build/bin/Debug"
+			-- defines "SFML_STATIC",
+			-- "sfml-graphics-s-d", "sfml-system-s-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-audio-s-d", "freetype","glew32",  "winmm", "gdi32", "jpeg", "openal32", "ws2_32", "opengl32", "glu32",
 
         filter "configurations:Release"
-            defines { "SFML_STATIC", "NDEBUG", "RELEASE" }
+            defines {  "NDEBUG", "RELEASE" }
             optimize "On"
-            links {"sfml-graphics-s", "sfml-system-s", "sfml-window-s", "sfml-network-s", "sfml-audio-s",  "glew32",  "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
+            links {  "SDL2", "SDL2Main", "SDL2Test"}
             debugdir "../build/bin/Release"
-
+			-- "SFML_STATIC",
+			-- "sfml-graphics-s", "sfml-system-s", "sfml-window-s", "sfml-network-s", "sfml-audio-s","freetype", "glew32",  "winmm", "gdi32", "jpeg", "openal32", "ws2_32", "opengl32", "glu32",
         filter "platforms:x86"
-            libdirs {"../libraries/sfml/lib/x86/lib/", "../libraries/glew/lib/x86/"}
-
+            libdirs { "../libraries/glew/lib/x86/", "../libraries/SDL/lib/x86/"}
+			-- "../libraries/sfml/lib/x86/lib/",
         filter "platforms:x64"
-            libdirs {"../libraries/sfml/lib/x64/lib/", "../libraries/glew/lib/x64"}
-
+            libdirs { "../libraries/glew/lib/x64", "../libraries/SDL/lib/x64/"}
+			-- "../libraries/sfml/lib/x64/lib/",
 
     project "Game"
         kind "ConsoleApp"
@@ -60,7 +64,7 @@ workspace "EngineLearning"
         targetdir "../build/bin/%{cfg.buildcfg}"
         location "../build/"
         includedirs {
-            "../libraries/sfml/include/",
+            "../libraries/SDL/include/",
             "Engine/",
             "EncoSys"
         }
@@ -73,18 +77,18 @@ workspace "EngineLearning"
         }
 
         filter "configurations:Debug"
-            defines { "SFML_STATIC", "DEBUG" }
+            defines { "DEBUG" }
             symbols "On"
-            links {"sfml-graphics-s-d", "sfml-system-s-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-audio-s-d", "glew32",  "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
-
+            links { "SDL2", "SDL2main", "SDL2test"}
+			-- "sfml-graphics-s-d", "sfml-system-s-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-audio-s-d","freetype","glew32",  "winmm", "gdi32",  "jpeg", "openal32", "ws2_32", "opengl32", "glu32", 
         filter "configurations:Release"
-            defines {"SFML_STATIC" , "NDEBUG", "RELEASE",}
+            defines { "NDEBUG", "RELEASE",}
             optimize "On"
-            links {"sfml-graphics-s", "sfml-system-s", "sfml-window-s", "sfml-network-s", "sfml-audio-s",  "glew32", "winmm", "gdi32", "freetype", "jpeg", "openal32", "ws2_32", "opengl32", "glu32"}
-
+            links {  "SDL2", "SDL2main", "SDL2test"}
+			-- "sfml-graphics-s", "sfml-system-s", "sfml-window-s", "sfml-network-s", "sfml-audio-s","freetype","glew32", "winmm", "gdi32",  "jpeg", "openal32", "ws2_32", "opengl32", "glu32",
         filter "platforms:x86"
             libdirs {"../libraries/sfml/lib/x86/lib/", "../libraries/glew/lib/x86/"}
 
 
         filter "platforms:x64"
-            libdirs {"../libraries/sdl/lib/x64/lib/", "../libraries/glew/lib/x64/"}
+            libdirs {"../libraries/sdl/lib/x64/lib/", "../libraries/glew/lib/x64/", "../libraries/SDL/lib/x64/"}

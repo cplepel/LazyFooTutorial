@@ -25,15 +25,7 @@
 
 #pragma once
 
-#include <sfml/System/Vector2.hpp>
-#include <sfml/System/Vector3.hpp>
 // Note CPP: These type defs are just so we don't have the sf:: namespace everywhere in engine code.
 // More typedefs can be added. 
 
 // Including math ones here so we dont include Math.h everywhere
-using Vect2i = sf::Vector2<int>;
-using Vect2f = sf::Vector2<float>;
-using Vect2u = sf::Vector2<unsigned int>;
-using Vect3i = sf::Vector3<int>;
-using Vect3f = sf::Vector3<float>;
-using Vect3u = sf::Vector3<unsigned int>;

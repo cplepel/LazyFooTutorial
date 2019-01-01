@@ -49,7 +49,7 @@ template <typename TObject, size_t PoolSize>
 class CTagRecycler {
 public:
     using TagType = Tag<TObject, PoolSize>;
-    using TagAllocator = TagAllocator<TObject, PoolSize>;
+    using TagAllocator = CTagAllocator<TObject, PoolSize>;
 
     CTagRecycler () : m_tag() {}
     TagType Tag () const { return m_tag; }
@@ -158,8 +158,8 @@ private:
 
 template <typename TObject, size_t PoolSize>
 TObject* CTagRecycler<TObject, PoolSize>::Create () {
-    const TagType tag = CTagAllocator::Get().Create();
-    TObject* created = CTagAllocator::Get().Deref(tag);
+    const TagType tag = CTagAllocator<TObject, PoolSize>::Get().Create();
+    TObject* created = CTagAllocator<TObject, PoolSize>::Get().Deref(tag);
     if (auto* recycler = static_cast<CTagRecycler<TObject, PoolSize>*>(created)) {
         recycler->m_tag = tag;
     }

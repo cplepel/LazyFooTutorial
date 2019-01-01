@@ -4,13 +4,11 @@
 
 //--------------------------------------------------------------------------------------------------
 bool CEngine::Initialize () {
-    return m_renderer.Initialize();
+    return true;
 }
 
 //--------------------------------------------------------------------------------------------------
 bool CEngine::Terminate() {
 
-    bool success = m_renderer.Terminate();
-    assert(success);
     return true;
 }
